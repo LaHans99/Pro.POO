@@ -1,0 +1,176 @@
+#include <iostream>
+
+#include <vector>
+#include <math.h>
+#include <fstream>
+#include <string>
+
+using namespace std;
+//ifstream archivoEntrada;
+//	archivoEntrada.open("datos.txt");
+   
+//ofstream archivoSalida;
+  //   archivoSalida.open("archivo.txt");
+    
+    
+	//string x;
+
+
+//string nombreDeArchivo;
+
+//ifstream archivoDeEntrada;
+
+//archivoDeEntrada.open(nombreDeArchivo.c_str());
+
+//ofstream archivoSalida;
+  //   archivoSalida.open("archivo.txt");
+    
+
+//cout << "cual es el nombre de tu archivo";
+//con >> nombre de archivo
+
+	
+
+
+
+//pasa los vectores con los numeros a ints para poder usarlos en una operacion
+int vecToInt(vector<int> vec) {
+	int cont = 0;
+	int resp = 0;
+	for (int i = vec.size() - 1; i >= 0 ; i--) {
+		resp += vec[cont] * pow(10, i);
+		cont++;
+	}
+	return resp;
+}
+//hace la operaion depende del operador que termina de decodificar con 4 ifs
+int operacion(int num1, int num2, int op) {
+	if (op == 10) {
+		return num1 + num2;
+	}
+	if (op == 11) {
+		return num1 - num2;
+	}
+	if (op == 12) {
+		return num1 * num2;
+	}
+	if (op == 13) {
+		return num1 / num2;
+	}
+return 0;
+} 
+
+
+int main() {
+
+int count = 0;
+string datos;
+string x,y;
+vector<string> vY;
+
+
+ifstream archivoDeEntrada;
+
+archivoDeEntrada.open("datos.txt");
+
+//ofstream archivoSalida;
+  // archivoSalida.open("archivo.txt");
+    
+
+
+
+
+while(!archivoDeEntrada.eof())
+{
+    if (count == 0)
+    {
+         getline(archivoDeEntrada,x);
+        count ++;
+    }
+else 
+
+    {
+        getline(archivoDeEntrada,y);
+        vY.push_back(y);
+    }
+
+}
+
+
+
+
+//string x;
+
+
+	string arrTabla[14];
+	vector<string> vecProblema;
+	vector<int> vecDeco, vecNum1, vecNum2;
+
+	int cont = 0, num1, num2, op, respuesta;
+count =0;
+//leer variable x, hasta que termine 
+ for (int iR = 0; iR < x.length();iR ++)
+    {
+        if (x[iR] != ' ')
+        {
+           arrTabla[count] = x[iR] ;
+           count ++;
+        }   
+    }
+
+//leer variable y;
+count = 0;
+for(int iR = 0; iR < vY.size(); iR ++)
+    {
+        for (int iS = 0; iS < vY[iR].length(); iS ++)
+        {
+            if ( vY[iR][iS] == ' ' )
+            {
+                vecProblema[iR][count] = vY[iR][iS];
+                count ++;
+            }
+        }
+        count = 0;
+    }
+
+
+
+
+	//decodifica
+
+	for (int i = 0; i < vecProblema.size(); i++) {
+		while (arrTabla[cont] != vecProblema[i]) {
+			cont++;
+		}
+		vecDeco.push_back(cont);
+		cont = 0;
+	}
+	cont = 0;
+	//saca el primer numero ya decodificado
+	while (vecDeco[cont] < 10) {
+		vecNum1.push_back(vecDeco[cont]);
+		cont++;
+	}
+	//saca el operador parcialmente decodificado
+	op = vecDeco[cont];
+	//saca el segundo numero ya decodificado
+	for (int i = cont + 1; i < vecDeco.size(); i++) {
+		vecNum2.push_back(vecDeco[cont]);
+		cont++;
+	}
+	cont = 0;
+
+	num1 = vecToInt(vecNum1);
+	num2 = vecToInt(vecNum2);
+
+	respuesta = operacion(num1, num2, op);
+    
+	archivoDeEntrada.close();
+   // archivoSalida.close();
+    
+return 0;
+
+
+
+
+}
